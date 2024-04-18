@@ -1,0 +1,29 @@
+---
+- name: Install python3,  docker and docker-compose
+  hosts: all
+  become: yes # every install here is done with root user hence the placement of this
+  gathering_facts: False
+  tasks:
+    - name: Install python3, and docker
+      vars: #this module allows python2 as interpreter for yum modules to install docker and other packages
+        ansible_python_interpreter: /usr/bin/python
+      yum:
+        name:
+          - python3
+          - docker
+        update_cache: yes
+        state: present
+    - name: Install Docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-{{lookup('pipe', 'uname -m')}}"
+        dest: /usr/local/bin/docker-compose
+        mode: +x
+    - name: Start docker
+      systemd:
+        name: docker
+        state: started
+    - name: Install docker python module # This is to enable the docker-image community module to be used
+      pip:
+        name: 
+          - docker
+          - docker-compose
