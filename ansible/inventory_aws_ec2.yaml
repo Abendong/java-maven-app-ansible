@@ -5,3 +5,5 @@ regions:
 keyed_groups:
   - key: tags
     prefix: "tag" # incase you dont want the underscore infornt of the group name
+  - key: instance_type
+    prefix: instance_type
