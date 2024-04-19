@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     environment {
@@ -32,6 +31,7 @@ pipeline {
 
                         remote.user = user
                         remote.identityFile = keyfile
+                        // sshScript remote: remote, script: "prepare-ansible-server.sh" # you could alternatively execute particular taasks on remote server using sshScript
                         sshCommand remote. remote, command: "ansible-playbook my-playbook.yaml"
 
                     }
